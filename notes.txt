@@ -1,0 +1,7 @@
+Faire le rapport où on mesure les temps d'exec en
+faisant varier le nombre de blocs et de threads.
+
+Faire une moyenne sur plusieurs mesures pour avoir une
+valeur plus accurate.
+
+Expliquer pourquoi c'est plus rapide/lent que..
