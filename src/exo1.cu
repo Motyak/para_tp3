@@ -5,11 +5,13 @@
 #include <random>
 #include <chrono>
 
-#define N 1024
+#define N  (2048*2048)
+#define THREAD_PER_BLOCK 512
 
 __global__ void add(int* a, int* b, int* c)
 {
-    c[threadIdx.x] = a[threadIdx.x] + b[threadIdx.x];
+    int index = threadIdx.x + blockIdx.x * blockDim.x;
+    c[index] = a[index] + b[index];
 }
 
 void randomInts(int* a, int size)
@@ -41,7 +43,7 @@ int main(void)
 
     auto t1 = std::chrono::high_resolution_clock::now();
 
-    add<<<1,N>>>(d_a, d_b, d_c);
+    add<<<N/THREAD_PER_BLOCK,THREAD_PER_BLOCK>>>(d_a, d_b, d_c);
 
     auto t2 = std::chrono::high_resolution_clock::now();
 
