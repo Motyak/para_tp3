@@ -1,13 +1,15 @@
 #include <stdio.h>
 // #include <cuda.h>
 
+#include <iostream>
 #include <random>
+#include <chrono>
 
-#define N 512
+#define N 1024
 
 __global__ void add(int* a, int* b, int* c)
 {
-    c[blockIdx.x] = a[blockIdx.x] + b[blockIdx.x];
+    c[threadIdx.x] = a[threadIdx.x] + b[threadIdx.x];
 }
 
 void randomInts(int* a, int size)
@@ -37,12 +39,20 @@ int main(void)
     cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
     cudaMemcpy(d_b, b, size, cudaMemcpyHostToDevice);
 
-    add<<<N,1>>>(d_a, d_b, d_c);
+    auto t1 = std::chrono::high_resolution_clock::now();
+
+    add<<<1,N>>>(d_a, d_b, d_c);
+
+    auto t2 = std::chrono::high_resolution_clock::now();
 
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
 
-    for(int i = 0 ; i < N ; ++i)
+    // j'affiche que les 10 premieres pour verifier
+    for(int i = 0 ; i < 10 ; ++i)
         printf("%d + %d = %d\n", a[i], b[i], c[i]);
+
+    auto int_us = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+    std::cout<<"done in "<<int_us.count()<<" μs"<<std::endl;
 
     free(a);
     free(b);
