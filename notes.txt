@@ -5,3 +5,6 @@ Faire une moyenne sur plusieurs mesures pour avoir une
 valeur plus accurate.
 
 Expliquer pourquoi c'est plus rapide/lent que..
+
+Pour les tests, utiliser des matrices de taille très grande
+	(style 2^24)

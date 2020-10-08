@@ -9,19 +9,23 @@
 #define N (DIM*DIM)
 #define THREAD_PER_BLOCK 512
 
-// __global__ void add(int* a, int* b, int* c)
-// {
-//     int index = threadIdx.x + blockIdx.x * blockDim.x;
-//     c[index] = a[index] + b[index];
-// }
-
-// déduire la fonction qui permet de trouver c[i] en fonction
-// de indice de a, indice de b et DIM
 __global__ void multiply(int* a, int* b, int* c)
 {
-    int indexRow = threadIdx.x + blockIdx.x * blockDim.x;
-    int indexCol = blockIdx.x + threadIdx.x * blockDim.x;
-    c[index] = a[index] * b[index];
+    // // je calcule le nombre de threads dans la grid,
+    // // sa racine carré correspond a la dim des matrices
+    // int dim = sqrtf(gridDim.x * blockDim.x);
+
+    int index_c = threadIdx.x + blockIdx.x * blockDim.x;
+    int index_a = ((int)(index_c / DIM)) * DIM;
+    int index_b = index_c % DIM;
+
+    c[index_c] = 0;
+    for(int i = 0 ; i < DIM ; ++i)
+    {
+        c[index_c] += a[index_a] * b[index_b];
+        ++index_a;      //pas de 1
+        index_b += DIM; //pas de dim
+    }
 }
 
 void randomInts(int* a, int size)
@@ -43,7 +47,7 @@ void printMatrix(int* m, int dim)
     printf("...\n\n");
 }
 
-// nvcc -o bin/exo2 src/exo2.cu
+// nvcc -o bin/exo3 src/exo3.cu
 int main(void)
 {
     int *a, *b, *c;
@@ -65,7 +69,7 @@ int main(void)
 
     auto t1 = std::chrono::high_resolution_clock::now();
 
-    add<<<N/THREAD_PER_BLOCK,THREAD_PER_BLOCK>>>(d_a, d_b, d_c);
+    multiply<<<N/THREAD_PER_BLOCK,THREAD_PER_BLOCK>>>(d_a, d_b, d_c);
 
     auto t2 = std::chrono::high_resolution_clock::now();
 
