@@ -43,7 +43,9 @@ int main(void)
 
     auto t1 = std::chrono::high_resolution_clock::now();
 
-    add<<<16384,1024>>>(d_a, d_b, d_c);
+    // add<<<NB_OF_ELEM,1>>>(d_a, d_b, d_c);    //avg: 40000ns
+    // add<<<524288,32>>>(d_a, d_b, d_c);       //avg: 42000ns
+    add<<<16384,1024>>>(d_a, d_b, d_c);      //avg: 38000ns
 
     auto t2 = std::chrono::high_resolution_clock::now();
 
