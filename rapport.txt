@@ -1,0 +1,56 @@
+A partir de matrices de dimension 2^12 (2^24 elements) :
+
+BENCH ADDITION DE MATRICES:
+
+2^24 blocs 		1 thread/bloc		28741ns (avg within 10 different instances)
+2^19 blocs		2^5 threads/bloc	20227ns (avg within 10 different instances)
+2^14 blocs		2^10 threads/bloc	17696ns (avg within 10 different instances)
+
+BENCH MULTIPLICATION DE MATRICES:
+
+2^24 blocs 		1 thread/bloc		28340ns (avg within 10 different instances)
+2^19 blocs		2^5 threads/bloc	18081ns (avg within 10 different instances)
+2^14 blocs		2^10 threads/bloc	17547ns (avg within 10 different instances)
+
++-------------------+---------------+------------------+-------------------+----------------+------------------+-------------------+
+|    Performance    |    ADDITION   |     ADDITION     |      ADDITION     | MULTIPLICATION |  MULTIPLICATION  |   MULTIPLICATION  |
+|     difference    |               |                  |                   |                |                  |                   |
+|                   |   2^24 blocs  |    2^19 blocs    |     2^14 blocs    |   2^24 blocs   |    2^19 blocs    |     2^14 blocs    |
+|                   | 1 thread/bloc | 2^5 threads/bloc | 2^10 threads/bloc |  1 thread/bloc | 2^5 threads/bloc | 2^10 threads/bloc |
++-------------------+---------------+------------------+-------------------+----------------+------------------+-------------------+
+|      ADDITION     |      +0%      |      +34.77%     |      +47.57%      |     +1.41%     |      +45.53%     |      +48.37%      |
+|                   |               |                  |                   |                |                  |                   |
+|     2^24 blocs    |               |                  |                   |                |                  |                   |
+|   1 thread/bloc   |               |                  |                   |                |                  |                   |
++-------------------+---------------+------------------+-------------------+----------------+------------------+-------------------+
+|      ADDITION     |    -34.77%    |        +0%       |      +13.35%      |     -33.41%    |      +11.20%     |      +14.19%      |
+|                   |               |                  |                   |                |                  |                   |
+|     2^19 blocs    |               |                  |                   |                |                  |                   |
+|  2^5 threads/bloc |               |                  |                   |                |                  |                   |
++-------------------+---------------+------------------+-------------------+----------------+------------------+-------------------+
+|      ADDITION     |    -47.57%    |      -13.35%     |        +0%        |     -46.24%    |      -2.15%      |       +0.85%      |
+|                   |               |                  |                   |                |                  |                   |
+|     2^14 blocs    |               |                  |                   |                |                  |                   |
+| 2^10 threads/bloc |               |                  |                   |                |                  |                   |
++-------------------+---------------+------------------+-------------------+----------------+------------------+-------------------+
+|   MULTIPLICATION  |     -1.41%    |      +33.41%     |      +46.24%      |       +0%      |      +44.20%     |      +47.04%      |
+|                   |               |                  |                   |                |                  |                   |
+|     2^24 blocs    |               |                  |                   |                |                  |                   |
+|   1 thread/bloc   |               |                  |                   |                |                  |                   |
++-------------------+---------------+------------------+-------------------+----------------+------------------+-------------------+
+|   MULTIPLICATION  |    -45.53%    |      -11.20%     |       +2.15%      |     -44.20%    |        +0%       |       +3.00%      |
+|                   |               |                  |                   |                |                  |                   |
+|     2^19 blocs    |               |                  |                   |                |                  |                   |
+|  2^5 threads/bloc |               |                  |                   |                |                  |                   |
++-------------------+---------------+------------------+-------------------+----------------+------------------+-------------------+
+|   MULTIPLICATION  |    -48.37%    |      -14.19%     |       -0.85%      |     -47.04%    |      -3.00%      |        +0%        |
+|                   |               |                  |                   |                |                  |                   |
+|     2^14 blocs    |               |                  |                   |                |                  |                   |
+| 2^10 threads/bloc |               |                  |                   |                |                  |                   |
++-------------------+---------------+------------------+-------------------+----------------+------------------+-------------------+
+
+Interprétation :
+
+-On constate de meilleures performances lorsqu'on augmente le nombre de threads.
+-La multiplication ne prend pas forcemment plus de temps que l'addition à réaliser
+    lorsqu'on procède par parallèlisation.
