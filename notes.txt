@@ -19,3 +19,11 @@ Utiliser 3 valeurs pairs de bloc/thread différentes
 2^14 blocs		2^10 threads/bloc		//LE MAX DE THREADS PAR BLOC EST 1024
 
 2^24 = 16777216
+
+
+
+BENCH :
+
+2^24 blocs 		1 thread/bloc		30000ns (avg with sample of 10)
+2^19 blocs		2^5 threads/bloc	25000ns (avg with sample of 10)
+2^14 blocs		2^10 threads/bloc	20000ns (avg with sample of 10)

@@ -45,10 +45,8 @@ int main(void)
     cudaMalloc((void**)&d_b, size);
     cudaMalloc((void**)&d_c, size);
 
-    a = (int*)malloc(size);
-    randomInts(a, N);
-    b = (int*)malloc(size);
-    randomInts(b, N);
+    a = (int*)malloc(size);     randomInts(a, N);
+    b = (int*)malloc(size);     randomInts(b, N);
     c = (int*)malloc(size);
 
     cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
@@ -64,19 +62,13 @@ int main(void)
 
     // j'affiche les 3 premières lignes/col de la mat1, mat2
     // et mat résultat
-    printMatrix(a, DIM);
-    printMatrix(b, DIM);
-    printMatrix(c, DIM);
+    printMatrix(a, DIM);    printMatrix(b, DIM);    printMatrix(c, DIM);
 
     auto int_us = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
     std::cout<<"done in "<<int_us.count()<<" μs"<<std::endl;
 
-    free(a);
-    free(b);
-    free(c);
-    cudaFree(d_a); 
-    cudaFree(d_b); 
-    cudaFree(d_c);
+    free(a);        free(b);        free(c);
+    cudaFree(d_a);  cudaFree(d_b);  cudaFree(d_c);
 
     return 0;
 }
