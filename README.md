@@ -1,3 +1,11 @@
+# TO BUILD
+```console
+foo@bar:<...>/para_tp3$ make
+nvcc -o bin/exo1 src/exo1.cu
+nvcc -o bin/exo2 src/exo2.cu
+nvcc -o bin/exo3 src/exo3.cu
+```
+
 # Benchmarks
 
 |            Performance difference            | ADDITION  2^24 blocs 1 thread/bloc | ADDITION  2^19 blocs 2^5 threads/bloc | ADDITION  2^14 blocs 2^10 threads/bloc | MULTIPLICATION  2^24 blocs 1 thread/bloc | MULTIPLICATION  2^19 blocs 2^5 threads/bloc | MULTIPLICATION  2^14 blocs 2^10 threads/bloc |
